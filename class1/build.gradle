@@ -1,0 +1,137 @@
+// class1
+
+String name = 'John' // 내부적으로는 groovy의 GString 사용됨.
+String age = "40"	// 작은 따옴표, 쌍따옴표 상관없음.
+					// 여러줄에 걸친 String 만들기
+String mydesc = '''	
+Where are you from?
+I amm from korea.
+'''
+String title = 'Project: ${project.name}'	// Error : 작은따움표 쓰면 안되나봄.
+String title2 = "Project: ${project.name}"  // Error : 책 따라했는데 안됨.
+String title3 = "Project: $name"
+String banner = """######
+# ${new Date().toGMTString()} #
+######"""
+
+task helloworld << {
+	println name
+	println age
+	println mydesc
+	println title
+	println title2
+	println title3
+	println banner
+}
+
+/* ===== result =====
+:helloworld
+John
+40
+
+Where are you from?
+I amm from korea.
+
+Project: ${project.name}
+Project: class1
+Project: John
+######
+# 16 Jul 2016 11:04:48 GMT #
+######
+*/
+
+task helloworld2 << {
+	// 메소드 호출시 괄호 생략
+	println('hello World!')
+	println 'hello World!'
+	// String.Format 같은 거
+	printf '%5.3f', 345.0
+	// println		// error
+	println()
+	// println someMethod 'foo' // error
+	// def status = someMethod 'foo' // error
+
+	// 그냥 항상 괄호 쓰는 습관을 들이는게 낫겠다.
+}
+
+def name2 = 'JoJo'
+
+task helloworld3 << {
+	println(name2)
+}
+
+// CLOSURE : 람다 같은거.
+def clos1 = { mes -> println "Hi, $mes"}
+
+// 파라미터 생략하면 암묵적 인수로 it 사용됨
+def clos2 = { println "Hi, $it"}
+
+def clos3 = { println 'hello gradle world'}
+
+task helloworld4 << {
+	clos1("Nancy")
+	clos2("Jave")
+	clos2 "Jave hi"
+	clos2 'Jave hi hi'
+	clos1.call("Ludy")
+
+}
+
+// << 는 leftShift() 의 생략형임.
+task hello {}
+hello.leftShift(clos3)
+hello.leftShift(clos3)
+helloworld4.leftShift(clos3)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

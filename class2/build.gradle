@@ -1,0 +1,23 @@
+// build-in task 사용해보기
+// gradle tasks // 내장 태스크 목록 보기
+// gradle help --task <태스크명> // 태스크 설명 보기
+// gradle 옵션 
+// -i --info
+// -s --stacktrace
+// -S --full-stacktrack
+// -d --debug
+// -q --quiet
+// -b --build-file	// 파일명 지정
+// 기본 로그레벨은 ERROR 임
+
+// ex) gradle -i <task>
+// ex) gradle --info <task>
+
+// init 을 이용한 template 프로젝트 생성
+// ex) gradle init --type java-library // 자바 프로젝트 생성
+
+// gradle --daemon testClasses // gradle JVM을 매번 실행/정지 하지 않도록 한다.
+
+task hello << {
+	println("hello")
+}
