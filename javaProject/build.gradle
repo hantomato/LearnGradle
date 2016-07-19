@@ -42,3 +42,11 @@ dependencies {
     testCompile 'junit:junit:4.12'
 }
 
+task helloworld << {
+    println "hello start ====="
+    println(sourceSets)
+    println(libsDir)
+    println(sourceSets.test.output)
+    println(sourceSets['test'].output)
+    println "hello end ====="
+}

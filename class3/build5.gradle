@@ -1,0 +1,94 @@
+
+task hello << {
+    println 'hello'
+}
+
+// File examples
+File javaFile = file('src/main/java/Main.java')
+File dummyTxt = file(new File('src/dummy.txt'))
+
+File index = null
+URL url = new URL('file:/index.html')
+index = file(url)
+URI uri = new URI('file:/index.html')
+index = file(uri)
+
+File existDir = file('src/main/existDir', PathValidation.DIRECTORY)
+// https://docs.gradle.org/current/javadoc/org/gradle/api/PathValidation.html
+
+FileCollection collections = files('file1.txt', 'file2.txt', 'file3.txt')
+
+// as 연산자를 이용한 변환
+List list = collections as List
+Set set1 = collections as Set
+File[] array = collections as File[]
+
+// getFiles()의 그루비 간략 기법
+Set set2 = collections.files
+
+// getSingleFile 그루비 간략 기법
+FileCollection collection = files('file1.txt')
+File file = collection.singleFile
+
+// getAsPath()의 그루비 간략 기법
+String path = collection.asPath
+
+FileTree sourceTree = fileTree('src')
+
+// 파일 일치는 앤트 패턴을 이용
+// include(), exclude() 를 이용해 패턴에 일치하는 파일을 트리에 추가/삭제
+// * : 0회 이상 임의의 문자열
+//  ex) *.html
+//  ex) *Tests.java
+//
+// ? : 임의의 문자 하나
+//  ex) fixture-??.xml
+//
+// ** : 임의의 계층에 있는 디렉토리와 파일
+//  ex) **/*.jsp : 서브 디렉토리를 포함한 모든 계층에 있는 jsp 파일
+//  ex) tests/**/*.java : tests 디렉토리 이하의 모든 계층에 있는 자바 파일
+//
+// / or \로 끝나는 문자열 : 뒤에 **가 붙은 것과 같다. 즉 지정 디렉토리 아래에 있는
+//      모든 파일에 일치한다.
+//  ex) templates/: templates/**로 해석되며, templates 디렉토리 아래에 있는
+//      모든 파일에 일치한다.
+
+
+// ex) src 디렉토리를 기준으로 파일 트리를 작성하고
+// include()을 이용해서 혹장자가 .java 인 파일만 포함한다.
+// 그리고 exclude()를 이용해서 something.java 파일은 제외한다.
+FileTree sourceFiles = fileTree('src')
+sourceFiles.each { println it.name }
+
+println '-- include *.java--'
+FileTree javaFiles = sourceFiles.include('**/*.java')
+javaFiles.each { println it.name }
+
+println '-- exclude something.java --'
+FileTree tree = javaFiles.exclude('**/something.java')
+tree.each { println it.name }
+
+// ex) 클로저를 이용한 파일 트리 생성
+FileTree tree = fileTree('src') {
+    include '**/*.java'
+    exclude '**/something.java'
+}
+tree.each { println it.name }
+
+// ex) 맵을 이용한 파일 트리 생성
+FileTree tree fileTree(dir: 'src', include: '**/*.java', exclude: '**/something.java')
+tree.each { println it.name }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
