@@ -1,0 +1,52 @@
+/*
+4가지 설정 정의
+
+1. buildscript
+	- Android 플러그인을 사용하기 위한 준비 설정을 한다.
+
+2. 플러그인 설정
+	- apply plugin 'com.android.application'
+	- apply plugin 'com.android.library'
+	* Android 플러그인은 Java 플러그인과 공존할 수 없다. 따라서
+		Java 플러그인이 제공하는 JUnit을 이용한 테스트나
+		Java 플러그인이 의존하는 Checkstyle, FindBugs 플러그인은 사용할 수 없다.
+
+3. android 블럭
+	- 안드로이드용 각종 파라미터를 설정한다.
+	- compileSdkVersion : 사용하는 Android SDK 버전
+	- buildToolsVersion : 사용하는 Android Build Tools 버전
+	- defaultConfig : manifest 지정
+	- signingConfigs : 서명
+	- buildTypes
+	- productFlavors
+
+4. dependencies 블럭
+	- compile 				: 프로덕션 코드 컴파일
+	- androidTestCompile 	: 테스트 코드 컴파일
+	* 안드로이드에는 testCompile 없다고 하네
+	- debugCompile 			: 디버그용 컴파일
+	- releaseCompile 		: 릴리즈용 컴파일
+
+내장 테스크
+- assemble task
+- check task
+- build task
+- clean task
+*/
+
+buildscript {
+	repositories {
+		mavenCentral()
+	}
+
+	dependencies {
+		classpath 'com.android.tools.build:gradle:0.12.+'
+	}
+}
+
+apply plugin: 'android'
+
+android {
+	compileSdkVersion 'android-L'
+	buildToolsVersion '20.0.0'
+}

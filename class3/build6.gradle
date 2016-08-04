@@ -30,6 +30,77 @@ ext {
 	key2 = 'value2'
 }
 
+// 프로젝트 속성
+// gradle.properties에서 속성을 추가할 수 있다.
+task test2 << {
+	println myname	// "nmj"
+	println myage	// 40
+	// println company	// yahoo
+}
+// $ gradle -b build6.gradle -Pcompany=yahoo test2
+
+/*
+주요 스크립트 블록, 도메인 객체
+initscript		ScriptHandler 			// 초기화 스크립트의 클래스패스 설정
+buildscript 	ScriptHandler 			// 빌드 스크립트의 클래스패스 설정
+allprojects 	Project 				// 서브 프로젝트를 포함하는 전체 프로젝트 관련 설정
+subprojects 	Project 				// 서브 프로젝트 관련 설정
+configurations 	ConfigurationContainer	// 환경 구성 설정
+dependencies 	DependencyHandler		// 의존관계 해결을 위한 설정
+repositories 	RepositoryHandler		// 저장소 설정
+artifacts 		ArtifactHandler			// 빌드 결과물(아티팩트)을 공개하기 위한 설정
+
+https://docs.gradle.org/current/dsl/
+*/
+
+// project.description = 'hhhhh'
+// println project.description
+// println project.rootProject.path
+// println project.path
+// println project.projectDir
+
+task test3 << {
+	println project.name
+	println project.projectDir
+	println project.description
+}
+
+// defaultTasks 'test1'	// task2 를 디폴트 테스크로 지정함.
+// defaultTasks = ['hello', 'test2']
+
+// def childInstance = project(':child')
+// childInstance.description = 'child..'
+
+// callback apis
+project.beforeEvaluate {
+	println 'before.. evaluate'
+}
+project.afterEvaluate {
+	println 'after.. evaluate'
+}
+
+gradle.allprojects { project ->
+	project.afterEvaluate {
+		println 'after..   evaluate'
+	}
+}
+gradle.allprojects { project ->
+	if (project.name == 'method-desc') {
+		project.afterEvaluate {
+			println 'after......   evaluate'
+		}		
+	}
+}
+// beforeEvaluate 는 프로젝트 평가 전에 콜백되므로 빌드 스크립트를 읽기 전에 실행된다.
+// 따라서 beforeEvaluate는 초기화 스크립트나 설정 스크립트에 넣어야함.
+
+// 기타. javaexec(), exec(), tarTree(), zipTree() 등등
+// https://docs.gradle.org/current/dsl/org.gradle.api.Task.html
+// 
+
+
+
+
 
 
 

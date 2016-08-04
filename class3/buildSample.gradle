@@ -1,0 +1,45 @@
+task myZip(type: Zip) {
+	baseName = "project-docs"	// zip 파일명
+
+	// doc에 src/dist 디렉토리에서 html, css, js 파일을 모두 추가
+	into ("docs") {
+		from ("src/dist") {
+			include "**/*.html", "**/*.css", "**/*.js"
+		}
+	}
+}
+
+
+task docsZip(type: Zip) {
+	from "docs"
+	include "**/*.css", "**/*.html"
+	exclude "single.html"
+	includeEmptyDirs = false
+}
+
+// 기본 제외 설정 삭제하기
+// org.apache.tools.ant.DirectoryScanner.removeDefaultExclude("**/.gitignore")
+task docsZip2(type: Zip) {
+	from (".")
+	include "**/.gitignore", "**/*.java", "**/*.html"
+	exclude ".gradle"
+}
+
+final docTheme = "BLUE"
+task docsZip3(type: Zip) {
+	into("userguide") {
+		from("docs") {
+			include "**/*.htnl", "**/*.css"
+			rename { originalNmae -> {
+				if (originalName == "release-note.html")
+					return "release-note-${new Date().format('yyyyMMddHHmm')}.html
+			}
+		}
+
+	}
+
+}
+
+
+
+
